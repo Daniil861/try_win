@@ -718,19 +718,20 @@ body._hold {
   width: 5.125rem;
   height: 5.25rem;
 }
-.board-main__button img:first-child {
-  max-width: 100%;
+.board-main__button-circle {
+  width: 100%;
+  height: 100%;
 }
-.board-main__button img:last-child {
+.board-main__button-circle img {
+  width: 100%;
+}
+.board-main__button-icon {
   position: absolute;
   top: 43%;
   left: 52%;
   transform: translate(-50%, -50%);
 }
-.board-main__button picture {
-  width: 5.125rem;
-  height: 5.25rem;
-}
+
 .actions-main__body {
   display: flex;
   flex-direction: column;
