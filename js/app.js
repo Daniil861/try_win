@@ -121,6 +121,8 @@
         sessionStorage.setItem(name, JSON.stringify(arr));
     }
     function get_arr_storrage(name) {
+        console.log(name);
+        console.log(sessionStorage.getItem(name));
         let arr = JSON.parse(sessionStorage.getItem(name));
         let numbers = arr;
         numbers.sort((function(a, b) {
@@ -376,7 +378,7 @@
         }));
     }
     function check_position_weapons_when_open_page() {
-        document.querySelectorAll(".heroe-team").forEach((el => {
+        if (sessionStorage.getItem("weapon-1") || sessionStorage.getItem("weapon-2") || sessionStorage.getItem("weapon-3") || sessionStorage.getItem("weapon-4") || sessionStorage.getItem("weapon-5") || sessionStorage.getItem("weapon-6") || sessionStorage.getItem("weapon-7") || sessionStorage.getItem("weapon-8") || sessionStorage.getItem("weapon-9") || sessionStorage.getItem("weapon-10") || sessionStorage.getItem("weapon-11") || sessionStorage.getItem("weapon-12")) document.querySelectorAll(".heroe-team").forEach((el => {
             if (!el.classList.contains("_locked")) {
                 let arr = [];
                 let arr_2 = [];
