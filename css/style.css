@@ -727,6 +727,10 @@ body._hold {
   left: 52%;
   transform: translate(-50%, -50%);
 }
+.board-main__button picture {
+  width: 5.125rem;
+  height: 5.25rem;
+}
 .actions-main__body {
   display: flex;
   flex-direction: column;
@@ -805,6 +809,10 @@ body._hold {
 .actions-main__image img {
   max-width: 60%;
   padding-bottom: 0.625rem;
+}
+.actions-main__image picture {
+  display: flex;
+  justify-content: center;
 }
 .levels__body {
   display: flex;
