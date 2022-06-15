@@ -2003,7 +2003,7 @@ body._hold {
     }
   }
 }
-@media (max-height: 24.375em) {
+@media (max-height: 22.5em) {
   @supports (width: clamp( 4.375rem , 0.25rem  +  12vw , 6.25rem )) {
     .field__evil {
       width: clamp( 4.375rem , 0.25rem  +  12vw , 6.25rem );
@@ -2025,7 +2025,7 @@ body._hold {
     }
   }
 }
-@media (max-height: 22.5em) {
+@media (max-height: 20em) {
   @supports (width: clamp( 3.75rem , 1rem  +  8vw , 5rem )) {
     .field__evil {
       width: clamp( 3.75rem , 1rem  +  8vw , 5rem );
@@ -2186,7 +2186,7 @@ body._hold {
     row-gap: 1.5625rem;
   }
 }
-@media (max-height: 24.375em) {
+@media (max-height: 22.5em) {
   @supports (width: clamp( 4.375rem , 0.25rem  +  12vw , 6.25rem )) {
     .field__heroe {
       width: clamp( 4.375rem , 0.25rem  +  12vw , 6.25rem );
@@ -2208,7 +2208,7 @@ body._hold {
     }
   }
 }
-@media (max-height: 22.5em) {
+@media (max-height: 20em) {
   @supports (width: clamp( 3.75rem , 1rem  +  8vw , 5rem )) {
     .field__heroe {
       width: clamp( 3.75rem , 1rem  +  8vw , 5rem );
