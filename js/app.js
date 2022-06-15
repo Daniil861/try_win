@@ -1350,6 +1350,12 @@
             }), 2500);
         }
     }
+    const audio_main = new Audio;
+    audio_main.preload = "auto";
+    audio_main.src = "../../files/audio_m_1.mp3";
+    const audio_fight = new Audio;
+    audio_fight.preload = "auto";
+    audio_fight.src = "../../files/audio_g_2.mp3";
     document.addEventListener("click", (e => {
         let targetElement = e.target;
         let current_level = +sessionStorage.getItem("current-level");
@@ -1447,6 +1453,14 @@
             document.querySelector(".game__button-start-box").classList.add("_start");
             document.querySelector(".game__button-start").classList.remove("_anim");
             start_game();
+        }
+        if (targetElement.closest(".volume") && document.querySelector(".main") || document.querySelector(".shop") || document.querySelector(".team")) {
+            if (targetElement.closest(".volume") && targetElement.closest(".volume").classList.contains("_hide")) audio_main.play(); else if (targetElement.closest(".volume") && !targetElement.closest(".volume").classList.contains("_hide")) audio_main.pause();
+            targetElement.closest(".volume").classList.toggle("_hide");
+        }
+        if (targetElement.closest(".volume") && document.querySelector(".game")) {
+            if (targetElement.closest(".volume") && targetElement.closest(".volume").classList.contains("_hide")) audio_fight.play(); else if (targetElement.closest(".volume") && !targetElement.closest(".volume").classList.contains("_hide")) audio_fight.pause();
+            targetElement.closest(".volume").classList.toggle("_hide");
         }
     }));
     window["FLS"] = true;

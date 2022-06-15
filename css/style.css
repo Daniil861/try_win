@@ -556,6 +556,17 @@ body._hold {
   flex: 1 1 auto;
 }
 
+.volume {
+  position: absolute;
+  bottom: 0.9375rem;
+  right: 0.9375rem;
+  width: 1.875rem;
+  height: 1.875rem;
+}
+.volume._hide {
+  animation: volume 2s linear infinite;
+}
+
 .content-main {
   display: flex;
 }
@@ -1758,11 +1769,36 @@ body._hold {
 }
 .item-weapons__damage-info {
   position: absolute;
-  top: 0.9375rem;
-  right: 0.5rem;
+  top: 0rem;
+  right: -0.3125rem;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@supports (width: clamp( 1.875rem , -0.325rem  +  6.4vw , 2.875rem )) {
+  .item-weapons__damage-info {
+    width: clamp( 1.875rem , -0.325rem  +  6.4vw , 2.875rem );
+  }
+}
+@supports not (width: clamp( 1.875rem , -0.325rem  +  6.4vw , 2.875rem )) {
+  .item-weapons__damage-info {
+    width: calc(1.875rem + 1 * (100vw - 34.375rem) / 15.625);
+  }
+}
+@supports (height: clamp( 1.875rem , -0.325rem  +  6.4vw , 2.875rem )) {
+  .item-weapons__damage-info {
+    height: clamp( 1.875rem , -0.325rem  +  6.4vw , 2.875rem );
+  }
+}
+@supports not (height: clamp( 1.875rem , -0.325rem  +  6.4vw , 2.875rem )) {
+  .item-weapons__damage-info {
+    height: calc(1.875rem + 1 * (100vw - 34.375rem) / 15.625);
+  }
 }
 .item-weapons__damage-info p {
-  font-size: 0.75rem;
+  font-size: 0.9375rem;
   line-height: 1.25;
   color: #fff;
 }
@@ -1770,6 +1806,10 @@ body._hold {
   padding: 1.25rem 0.9375rem;
   min-height: 100vh;
   position: relative;
+}
+.game__volume {
+  left: 0.9375rem;
+  bottom: 5rem;
 }
 .game__button-box {
   position: absolute;
@@ -3406,5 +3446,13 @@ body._hold {
   }
   100% {
     transform: translate(0, 0);
+  }
+}
+@keyframes volume {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.1;
   }
 }
