@@ -1353,11 +1353,11 @@
     const audio_main = new Audio;
     audio_main.preload = "auto";
     audio_main.src = "files/audio_m_1.mp3";
-    audio_main.loop = true;
+    audio_main.loop = [ true ];
     const audio_fight = new Audio;
     audio_fight.preload = "auto";
     audio_fight.src = "files/audio_g_2.mp3";
-    audio_main.loop = true;
+    audio_main.loop = [ true ];
     document.addEventListener("click", (e => {
         let targetElement = e.target;
         let current_level = +sessionStorage.getItem("current-level");
