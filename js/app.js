@@ -164,41 +164,51 @@
     function write_random_enemy() {
         let random_arr = get_random_num_arr(1, 9);
         let new_rand_arr = random_arr();
-        if (document.documentElement.classList.contains("webp")) {
-            document.querySelector(".actions-main__image_1 source").setAttribute("srcset", `img/enemys/enemy-${new_rand_arr[0]}.webp`);
-            document.querySelector(".actions-main__image_2 source").setAttribute("srcset", `img/enemys/enemy-${new_rand_arr[1]}.webp`);
-        } else {
-            document.querySelector(".actions-main__image_1 source").setAttribute("srcset", `img/enemys/enemy-${new_rand_arr[0]}.webp`);
-            document.querySelector(".actions-main__image_2 source").setAttribute("srcset", `img/enemys/enemy-${new_rand_arr[1]}.webp`);
-        }
+        setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) {
+                document.querySelector(".actions-main__image_1 source").setAttribute("srcset", `img/enemys/enemy-${new_rand_arr[0]}.webp`);
+                document.querySelector(".actions-main__image_2 source").setAttribute("srcset", `img/enemys/enemy-${new_rand_arr[1]}.webp`);
+            } else {
+                document.querySelector(".actions-main__image_1 img").setAttribute("src", `img/enemys/enemy-${new_rand_arr[0]}.png`);
+                document.querySelector(".actions-main__image_2 img").setAttribute("src", `img/enemys/enemy-${new_rand_arr[1]}.png`);
+            }
+        }), 100);
     }
     function check_active_heroes_main_screen() {
-        if (sessionStorage.getItem("current-hero-1") && sessionStorage.getItem("current-hero-2")) if (document.documentElement.classList.contains("webp")) {
-            document.querySelector(".board-main__man_1 source").setAttribute("srcset", `img/heroes/hero-${+sessionStorage.getItem("current-hero-1")}.webp`);
-            document.querySelector(".board-main__man_2 source").setAttribute("srcset", `img/heroes/hero-${+sessionStorage.getItem("current-hero-2")}.webp`);
-            document.querySelector(".board-main__sword_1 source").setAttribute("srcset", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-1")}.webp`);
-            document.querySelector(".board-main__sword_2 source").setAttribute("srcset", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-2")}.webp`);
-        } else {
-            document.querySelector(".board-main__man_1 img").setAttribute("src", `img/heroes/hero-${+sessionStorage.getItem("current-hero-1")}.png`);
-            document.querySelector(".board-main__man_2 img").setAttribute("src", `img/heroes/hero-${+sessionStorage.getItem("current-hero-2")}.png`);
-            document.querySelector(".board-main__sword_1 img").setAttribute("src", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-1")}.png`);
-            document.querySelector(".board-main__sword_2 img").setAttribute("src", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-2")}.png`);
-        } else if (sessionStorage.getItem("current-hero-1") && !sessionStorage.getItem("current-hero-2")) if (document.documentElement.classList.contains("webp")) {
-            document.querySelector(".board-main__man_1 source").setAttribute("srcset", `img/heroes/hero-${+sessionStorage.getItem("current-hero-1")}.webp`);
-            document.querySelector(".board-main__sword_1 source").setAttribute("srcset", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-1")}.webp`);
-        } else {
-            document.querySelector(".board-main__man_1 img").setAttribute("src", `img/heroes/hero-${+sessionStorage.getItem("current-hero-1")}.png`);
-            document.querySelector(".board-main__sword_1 img").setAttribute("src", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-1")}.png`);
-        } else if (!sessionStorage.getItem("current-hero-1") && sessionStorage.getItem("current-hero-2")) if (document.documentElement.classList.contains("webp")) {
-            document.querySelector(".board-main__man_2 source").setAttribute("srcset", `img/heroes/hero-${+sessionStorage.getItem("current-hero-2")}.webp`);
-            document.querySelector(".board-main__sword_2 source").setAttribute("srcset", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-2")}.webp`);
-        } else {
-            document.querySelector(".board-main__man_2 img").setAttribute("src", `img/heroes/hero-${+sessionStorage.getItem("current-hero-2")}.png`);
-            document.querySelector(".board-main__sword_2 img").setAttribute("src", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-2")}.png`);
-        }
+        if (sessionStorage.getItem("current-hero-1") && sessionStorage.getItem("current-hero-2")) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) {
+                document.querySelector(".board-main__man_1 source").setAttribute("srcset", `img/heroes/hero-${+sessionStorage.getItem("current-hero-1")}.webp`);
+                document.querySelector(".board-main__man_2 source").setAttribute("srcset", `img/heroes/hero-${+sessionStorage.getItem("current-hero-2")}.webp`);
+                document.querySelector(".board-main__sword_1 source").setAttribute("srcset", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-1")}.webp`);
+                document.querySelector(".board-main__sword_2 source").setAttribute("srcset", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-2")}.webp`);
+            } else {
+                document.querySelector(".board-main__man_1 img").setAttribute("src", `img/heroes/hero-${+sessionStorage.getItem("current-hero-1")}.png`);
+                document.querySelector(".board-main__man_2 img").setAttribute("src", `img/heroes/hero-${+sessionStorage.getItem("current-hero-2")}.png`);
+                document.querySelector(".board-main__sword_1 img").setAttribute("src", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-1")}.png`);
+                document.querySelector(".board-main__sword_2 img").setAttribute("src", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-2")}.png`);
+            }
+        }), 100); else if (sessionStorage.getItem("current-hero-1") && !sessionStorage.getItem("current-hero-2")) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) {
+                document.querySelector(".board-main__man_1 source").setAttribute("srcset", `img/heroes/hero-${+sessionStorage.getItem("current-hero-1")}.webp`);
+                document.querySelector(".board-main__sword_1 source").setAttribute("srcset", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-1")}.webp`);
+            } else {
+                document.querySelector(".board-main__man_1 img").setAttribute("src", `img/heroes/hero-${+sessionStorage.getItem("current-hero-1")}.png`);
+                document.querySelector(".board-main__sword_1 img").setAttribute("src", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-1")}.png`);
+            }
+        }), 100); else if (!sessionStorage.getItem("current-hero-1") && sessionStorage.getItem("current-hero-2")) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) {
+                document.querySelector(".board-main__man_2 source").setAttribute("srcset", `img/heroes/hero-${+sessionStorage.getItem("current-hero-2")}.webp`);
+                document.querySelector(".board-main__sword_2 source").setAttribute("srcset", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-2")}.webp`);
+            } else {
+                document.querySelector(".board-main__man_2 img").setAttribute("src", `img/heroes/hero-${+sessionStorage.getItem("current-hero-2")}.png`);
+                document.querySelector(".board-main__sword_2 img").setAttribute("src", `img/weapons/sword-${+sessionStorage.getItem("current-weapon-2")}.png`);
+            }
+        }), 100);
     }
     if (document.querySelector(".wrapper__team") && sessionStorage.getItem("preloader")) {
-        if (window_height > 600) if (document.documentElement.classList.contains("webp")) document.querySelector(".content-item__bg source").setAttribute("srcset", "img/other/board-big.webp"); else document.querySelector(".content-item__bg img").setAttribute("src", "img/other/board-big.png");
+        if (window_height > 600) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) document.querySelector(".content-item__bg source").setAttribute("srcset", "img/other/board-big.webp"); else document.querySelector(".content-item__bg img").setAttribute("src", "img/other/board-big.png");
+        }), 100);
         if (sessionStorage.getItem("team-rule")) document.querySelector(".team__rules").classList.add("_hide");
         open_active_heroes();
         open_weapons_active_heroes();
@@ -218,12 +228,12 @@
         let board = document.createElement("div");
         board.classList.add("heroe-team__board");
         let board_image = document.createElement("img");
-        if (document.documentElement.classList.contains("webp")) board_image.setAttribute("srcsest", "img/icons/box-weapon.webp"); else board_image.setAttribute("src", "img/icons/box-weapon.png");
+        board_image.setAttribute("src", "img/icons/box-weapon.png");
         board.append(board_image);
         let sword = document.createElement("div");
         sword.classList.add("heroe-team__sword");
         let sword_image = document.createElement("img");
-        if (document.documentElement.classList.contains("webp")) sword_image.setAttribute("srcset", `img/weapons/sword-${weapon}.webp`); else sword_image.setAttribute("src", `img/weapons/sword-${weapon}.png`);
+        sword_image.setAttribute("src", `img/weapons/sword-${weapon}.png`);
         sword.append(sword_image);
         let item = document.createElement("div");
         item.classList.add("heroe-team__button-box");
@@ -233,17 +243,17 @@
         let wing_left = document.createElement("div");
         wing_left.classList.add("heroe-team__button-wing-left");
         let wing_left_image = document.createElement("img");
-        if (document.documentElement.classList.contains("webp")) wing_left_image.setAttribute("srcset", "img/icons/btn-left.webp"); else wing_left_image.setAttribute("src", "img/icons/btn-left.png");
+        wing_left_image.setAttribute("src", "img/icons/btn-left.png");
         wing_left.append(wing_left_image);
         let main_item = document.createElement("div");
         main_item.classList.add("heroe-team__button-middle");
         let main_item_image = document.createElement("img");
-        if (document.documentElement.classList.contains("webp")) main_item_image.setAttribute("srcset", "img/icons/btn-middle.webp"); else main_item_image.setAttribute("src", "img/icons/btn-middle.png");
+        main_item_image.setAttribute("src", "img/icons/btn-middle.png");
         main_item.append(main_item_image);
         let wing_right = document.createElement("div");
         wing_right.classList.add("heroe-team__button-wing-right");
         let wing_right_image = document.createElement("img");
-        if (document.documentElement.classList.contains("webp")) wing_right_image.setAttribute("srcset", "img/icons/btn-right.webp"); else wing_right_image.setAttribute("src", "img/icons/btn-right.png");
+        wing_right_image.setAttribute("src", "img/icons/btn-right.png");
         wing_right.append(wing_right_image);
         let text = document.createElement("p");
         text.textContent = "Select";
@@ -290,12 +300,16 @@
         let box_hero = document.createElement("div");
         box_hero.classList.add("heroe-team__box-hero");
         let box_hero_image = document.createElement("img");
-        if (document.documentElement.classList.contains("webp")) box_hero_image.setAttribute("srcset", "img/icons/card-hero.webp"); else box_hero_image.setAttribute("src", "img/icons/card-hero.png");
+        setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) box_hero_image.setAttribute("srcset", "img/icons/card-hero.webp"); else box_hero_image.setAttribute("src", "img/icons/card-hero.png");
+        }), 100);
         box_hero.append(box_hero_image);
         let hero = document.createElement("div");
         hero.classList.add("heroe-team__hero");
         let hero_image = document.createElement("img");
-        if (document.documentElement.classList.contains("webp")) hero_image.setAttribute("srcset", `img/heroes/hero-${hero_num}.webp`); else hero_image.setAttribute("src", `img/heroes/hero-${hero_num}.png`);
+        setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) hero_image.setAttribute("srcset", `img/heroes/hero-${hero_num}.webp`); else hero_image.setAttribute("src", `img/heroes/hero-${hero_num}.png`);
+        }), 100);
         hero.append(hero_image);
         character.append(box_hero, hero);
         return character;
@@ -342,7 +356,7 @@
             del_num = not_active_weapons.shift();
             not_active_weapons.push(+click_number);
             save_arr_storrage(not_active_weapons, "not-active-weapons");
-            if (document.documentElement.classList.contains("webp")) block.querySelector("source").setAttribute("srcset", `img/weapons/sword-${del_num}.webp`); else block.querySelector("img").setAttribute("src", `img/weapons/sword-${del_num}.png`);
+            block.querySelector("img").setAttribute("src", `img/weapons/sword-${del_num}.png`);
             box.dataset.active = del_num;
         }
     }
@@ -421,7 +435,7 @@
                     }
                 }));
                 arr_2.forEach(((item, i) => {
-                    if (document.documentElement.classList.contains("webp")) item.querySelector("source").setAttribute("srcset", `img/weapons/sword-${arr[i]}.webp`); else item.querySelector("img").setAttribute("src", `img/weapons/sword-${arr[i]}.png`);
+                    item.querySelector("img").setAttribute("src", `img/weapons/sword-${arr[i]}.png`);
                     item.closest(".heroe-team__weapon").dataset.active = arr[i];
                 }));
             }
@@ -464,7 +478,9 @@
         weapon_12: 2
     };
     if (document.querySelector(".shop") && sessionStorage.getItem("preloader")) {
-        if (window_height > 600) if (document.documentElement.classList.contains("webp")) document.querySelector(".content-item__bg source").setAttribute("srcset", "img/other/board-big.webp"); else document.querySelector(".content-item__bg img").setAttribute("src", "img/other/board-big.png");
+        if (window_height > 600) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) document.querySelector(".content-item__bg source").setAttribute("srcset", "img/other/board-big.webp"); else document.querySelector(".content-item__bg img").setAttribute("src", "img/other/board-big.png");
+        }), 100);
         write_prices_heroes();
         write_prices_weapons();
         check_opened_heroes();
@@ -652,56 +668,70 @@
         if (3 == +sessionStorage.getItem("current-level")) document.querySelector(".field__image_1").style.width = "100%";
     } else if (document.querySelector(".game") && !sessionStorage.getItem("preloader")) location.href = "index.html";
     function select_write_enemys() {
-        if (1 == config_game.level) if (document.documentElement.classList.contains("webp")) {
-            document.querySelector(".field__image_1 source").setAttribute("srcset", "img/enemys/enemy-1.webp");
-            document.querySelector(".field__image_2 source").setAttribute("srcset", "img/enemys/enemy-2.webp");
-        } else {
-            document.querySelector(".field__image_1 img").setAttribute("src", "img/enemys/enemy-1.png");
-            document.querySelector(".field__image_2 img").setAttribute("src", "img/enemys/enemy-2.png");
-        } else if (2 == config_game.level) if (document.documentElement.classList.contains("webp")) {
-            document.querySelector(".field__image_1 source").setAttribute("srcset", "img/enemys/enemy-3.webp");
-            document.querySelector(".field__image_2 source").setAttribute("srcset", "img/enemys/enemy-4.webp");
-        } else {
-            document.querySelector(".field__image_1 img").setAttribute("src", "img/enemys/enemy-3.png");
-            document.querySelector(".field__image_2 img").setAttribute("src", "img/enemys/enemy-4.png");
-        } else if (3 == config_game.level) if (document.documentElement.classList.contains("webp")) {
-            document.querySelector(".field__image_1 source").setAttribute("srcset", "img/enemys/enemy-5.webp");
-            document.querySelector(".field__image_2 source").setAttribute("srcset", "img/enemys/enemy-6.webp");
-        } else {
-            document.querySelector(".field__image_1 img").setAttribute("src", "img/enemys/enemy-5.png");
-            document.querySelector(".field__image_2 img").setAttribute("src", "img/enemys/enemy-6.png");
-        } else if (4 == config_game.level) if (document.documentElement.classList.contains("webp")) {
-            document.querySelector(".field__image_1 source").setAttribute("srcset", "img/enemys/enemy-7.webp");
-            document.querySelector(".field__image_2 source").setAttribute("srcset", "img/enemys/enemy-8.webp");
-        } else {
-            document.querySelector(".field__image_1 img").setAttribute("src", "img/enemys/enemy-7.png");
-            document.querySelector(".field__image_2 img").setAttribute("src", "img/enemys/enemy-8.png");
-        }
+        if (1 == config_game.level) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) {
+                document.querySelector(".field__image_1 source").setAttribute("srcset", "img/enemys/enemy-1.webp");
+                document.querySelector(".field__image_2 source").setAttribute("srcset", "img/enemys/enemy-2.webp");
+            } else {
+                document.querySelector(".field__image_1 img").setAttribute("src", "img/enemys/enemy-1.png");
+                document.querySelector(".field__image_2 img").setAttribute("src", "img/enemys/enemy-2.png");
+            }
+        }), 100); else if (2 == config_game.level) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) {
+                document.querySelector(".field__image_1 source").setAttribute("srcset", "img/enemys/enemy-3.webp");
+                document.querySelector(".field__image_2 source").setAttribute("srcset", "img/enemys/enemy-4.webp");
+            } else {
+                document.querySelector(".field__image_1 img").setAttribute("src", "img/enemys/enemy-3.png");
+                document.querySelector(".field__image_2 img").setAttribute("src", "img/enemys/enemy-4.png");
+            }
+        }), 100); else if (3 == config_game.level) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) {
+                document.querySelector(".field__image_1 source").setAttribute("srcset", "img/enemys/enemy-5.webp");
+                document.querySelector(".field__image_2 source").setAttribute("srcset", "img/enemys/enemy-6.webp");
+            } else {
+                document.querySelector(".field__image_1 img").setAttribute("src", "img/enemys/enemy-5.png");
+                document.querySelector(".field__image_2 img").setAttribute("src", "img/enemys/enemy-6.png");
+            }
+        }), 100); else if (4 == config_game.level) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) {
+                document.querySelector(".field__image_1 source").setAttribute("srcset", "img/enemys/enemy-7.webp");
+                document.querySelector(".field__image_2 source").setAttribute("srcset", "img/enemys/enemy-8.webp");
+            } else {
+                document.querySelector(".field__image_1 img").setAttribute("src", "img/enemys/enemy-7.png");
+                document.querySelector(".field__image_2 img").setAttribute("src", "img/enemys/enemy-8.png");
+            }
+        }), 100);
     }
     function select_write_heroes() {
-        if (sessionStorage.getItem("current-hero-1") && sessionStorage.getItem("current-hero-2")) if (document.documentElement.classList.contains("webp")) {
-            document.querySelector(".field__man_1 source").setAttribute("srcset", `img/heroes/hero-${sessionStorage.getItem("current-hero-1")}.webp`);
-            document.querySelector(".field__man_2 source").setAttribute("srcset", `img/heroes/hero-${sessionStorage.getItem("current-hero-2")}.webp`);
-            document.querySelector(".field__sword_1 source").setAttribute("srcset", `img/weapons/sword-${sessionStorage.getItem("current-weapon-1")}.webp`);
-            document.querySelector(".field__sword_2 source").setAttribute("srcset", `img/weapons/sword-${sessionStorage.getItem("current-weapon-2")}.webp`);
-        } else {
-            document.querySelector(".field__man_1 img").setAttribute("src", `img/heroes/hero-${sessionStorage.getItem("current-hero-1")}.png`);
-            document.querySelector(".field__man_2 img").setAttribute("src", `img/heroes/hero-${sessionStorage.getItem("current-hero-2")}.png`);
-            document.querySelector(".field__sword_1 img").setAttribute("src", `img/weapons/sword-${sessionStorage.getItem("current-weapon-1")}.png`);
-            document.querySelector(".field__sword_2 img").setAttribute("src", `img/weapons/sword-${sessionStorage.getItem("current-weapon-2")}.png`);
-        } else if (sessionStorage.getItem("current-hero-1") && !sessionStorage.getItem("current-hero-2")) if (document.documentElement.classList.contains("webp")) {
-            document.querySelector(".field__man_1 source").setAttribute("srcset", `img/heroes/hero-${sessionStorage.getItem("current-hero-1")}.webp`);
-            document.querySelector(".field__sword_1 source").setAttribute("srcset", `img/weapons/sword-${sessionStorage.getItem("current-weapon-1")}.webp`);
-        } else {
-            document.querySelector(".field__man_1 img").setAttribute("src", `img/heroes/hero-${sessionStorage.getItem("current-hero-1")}.png`);
-            document.querySelector(".field__sword_1 img").setAttribute("src", `img/weapons/sword-${sessionStorage.getItem("current-weapon-1")}.png`);
-        } else if (!sessionStorage.getItem("current-hero-1") && sessionStorage.getItem("current-hero-2")) if (document.documentElement.classList.contains("webp")) {
-            document.querySelector(".field__man_2 source").setAttribute("srcset", `img/heroes/hero-${sessionStorage.getItem("current-hero-2")}.webp`);
-            document.querySelector(".field__sword_2 source").setAttribute("srcset", `img/weapons/sword-${sessionStorage.getItem("current-weapon-2")}.webp`);
-        } else {
-            document.querySelector(".field__man_2 img").setAttribute("src", `img/heroes/hero-${sessionStorage.getItem("current-hero-2")}.png`);
-            document.querySelector(".field__sword_2 img").setAttribute("src", `img/weapons/sword-${sessionStorage.getItem("current-weapon-2")}.png`);
-        }
+        if (sessionStorage.getItem("current-hero-1") && sessionStorage.getItem("current-hero-2")) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) {
+                document.querySelector(".field__man_1 source").setAttribute("srcset", `img/heroes/hero-${sessionStorage.getItem("current-hero-1")}.webp`);
+                document.querySelector(".field__man_2 source").setAttribute("srcset", `img/heroes/hero-${sessionStorage.getItem("current-hero-2")}.webp`);
+                document.querySelector(".field__sword_1 source").setAttribute("srcset", `img/weapons/sword-${sessionStorage.getItem("current-weapon-1")}.webp`);
+                document.querySelector(".field__sword_2 source").setAttribute("srcset", `img/weapons/sword-${sessionStorage.getItem("current-weapon-2")}.webp`);
+            } else {
+                document.querySelector(".field__man_1 img").setAttribute("src", `img/heroes/hero-${sessionStorage.getItem("current-hero-1")}.png`);
+                document.querySelector(".field__man_2 img").setAttribute("src", `img/heroes/hero-${sessionStorage.getItem("current-hero-2")}.png`);
+                document.querySelector(".field__sword_1 img").setAttribute("src", `img/weapons/sword-${sessionStorage.getItem("current-weapon-1")}.png`);
+                document.querySelector(".field__sword_2 img").setAttribute("src", `img/weapons/sword-${sessionStorage.getItem("current-weapon-2")}.png`);
+            }
+        }), 100); else if (sessionStorage.getItem("current-hero-1") && !sessionStorage.getItem("current-hero-2")) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) {
+                document.querySelector(".field__man_1 source").setAttribute("srcset", `img/heroes/hero-${sessionStorage.getItem("current-hero-1")}.webp`);
+                document.querySelector(".field__sword_1 source").setAttribute("srcset", `img/weapons/sword-${sessionStorage.getItem("current-weapon-1")}.webp`);
+            } else {
+                document.querySelector(".field__man_1 img").setAttribute("src", `img/heroes/hero-${sessionStorage.getItem("current-hero-1")}.png`);
+                document.querySelector(".field__sword_1 img").setAttribute("src", `img/weapons/sword-${sessionStorage.getItem("current-weapon-1")}.png`);
+            }
+        }), 100); else if (!sessionStorage.getItem("current-hero-1") && sessionStorage.getItem("current-hero-2")) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) {
+                document.querySelector(".field__man_2 source").setAttribute("srcset", `img/heroes/hero-${sessionStorage.getItem("current-hero-2")}.webp`);
+                document.querySelector(".field__sword_2 source").setAttribute("srcset", `img/weapons/sword-${sessionStorage.getItem("current-weapon-2")}.webp`);
+            } else {
+                document.querySelector(".field__man_2 img").setAttribute("src", `img/heroes/hero-${sessionStorage.getItem("current-hero-2")}.png`);
+                document.querySelector(".field__sword_2 img").setAttribute("src", `img/weapons/sword-${sessionStorage.getItem("current-weapon-2")}.png`);
+            }
+        }), 100);
     }
     function write_start_characterisitcs() {
         write_life_damage_hero_1();
@@ -1081,7 +1111,9 @@
         }
     }
     function change_image_if_dead(item) {
-        if (document.documentElement.classList.contains("webp")) document.querySelector(`${item} source`).setAttribute("srcset", "img/icons/gameover.webp"); else document.querySelector(`${item} img`).setAttribute("src", "img/icons/gameover.png");
+        setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) document.querySelector(`${item} source`).setAttribute("srcset", "img/icons/gameover.webp"); else document.querySelector(`${item} img`).setAttribute("src", "img/icons/gameover.png");
+        }), 100);
         document.querySelector(item).classList.add("_loose");
         if (document.querySelector(item).closest(".field__evil")) document.querySelector(item).closest(".field__evil").classList.add("_loose"); else if (document.querySelector(item).closest(".field__heroe-inner")) document.querySelector(item).closest(".field__heroe-inner").classList.add("_loose");
     }
@@ -1104,68 +1136,90 @@
         }
     }
     function write_enemys_when_loose() {
-        if (1 == +sessionStorage.getItem("current-level")) if (document.documentElement.classList.contains("webp")) {
-            document.querySelector(".loose__image_1 source").setAttribute("srcset", "img/enemys/enemy-1.webp");
-            document.querySelector(".loose__image_2 source").setAttribute("srcset", "img/enemys/enemy-2.webp");
-        } else {
-            document.querySelector(".loose__image_1 img").setAttribute("src", "img/enemys/enemy-1.png");
-            document.querySelector(".loose__image_2 img").setAttribute("src", "img/enemys/enemy-2.png");
-        } else if (2 == +sessionStorage.getItem("current-level")) if (document.documentElement.classList.contains("webp")) {
-            document.querySelector(".loose__image_1 source").setAttribute("srcset", "img/enemys/enemy-3.webp");
-            document.querySelector(".loose__image_2 source").setAttribute("srcset", "img/enemys/enemy-4.webp");
-        } else {
-            document.querySelector(".loose__image_1 img").setAttribute("src", "img/enemys/enemy-3.png");
-            document.querySelector(".loose__image_2 img").setAttribute("src", "img/enemys/enemy-4.png");
-        } else if (3 == +sessionStorage.getItem("current-level")) if (document.documentElement.classList.contains("webp")) {
-            document.querySelector(".loose__image_1 source").setAttribute("srcset", "img/enemys/enemy-5.webp");
-            document.querySelector(".loose__image_2 source").setAttribute("srcset", "img/enemys/enemy-6.webp");
-        } else {
-            document.querySelector(".loose__image_1 img").setAttribute("src", "img/enemys/enemy-5.png");
-            document.querySelector(".loose__image_2 img").setAttribute("src", "img/enemys/enemy-6.png");
-        } else if (4 == +sessionStorage.getItem("current-level")) if (document.documentElement.classList.contains("webp")) {
-            document.querySelector(".loose__image_1 source").setAttribute("srcset", "img/enemys/enemy-7.webp");
-            document.querySelector(".loose__image_2 source").setAttribute("srcset", "img/enemys/enemy-8.webp");
-        } else {
-            document.querySelector(".loose__image_1 img").setAttribute("src", "img/enemys/enemy-7.png");
-            document.querySelector(".loose__image_2 img").setAttribute("src", "img/enemys/enemy-8.png");
-        }
+        if (1 == +sessionStorage.getItem("current-level")) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) {
+                document.querySelector(".loose__image_1 source").setAttribute("srcset", "img/enemys/enemy-1.webp");
+                document.querySelector(".loose__image_2 source").setAttribute("srcset", "img/enemys/enemy-2.webp");
+            } else {
+                document.querySelector(".loose__image_1 img").setAttribute("src", "img/enemys/enemy-1.png");
+                document.querySelector(".loose__image_2 img").setAttribute("src", "img/enemys/enemy-2.png");
+            }
+        }), 100); else if (2 == +sessionStorage.getItem("current-level")) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) {
+                document.querySelector(".loose__image_1 source").setAttribute("srcset", "img/enemys/enemy-3.webp");
+                document.querySelector(".loose__image_2 source").setAttribute("srcset", "img/enemys/enemy-4.webp");
+            } else {
+                document.querySelector(".loose__image_1 img").setAttribute("src", "img/enemys/enemy-3.png");
+                document.querySelector(".loose__image_2 img").setAttribute("src", "img/enemys/enemy-4.png");
+            }
+        }), 100); else if (3 == +sessionStorage.getItem("current-level")) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) {
+                document.querySelector(".loose__image_1 source").setAttribute("srcset", "img/enemys/enemy-5.webp");
+                document.querySelector(".loose__image_2 source").setAttribute("srcset", "img/enemys/enemy-6.webp");
+            } else {
+                document.querySelector(".loose__image_1 img").setAttribute("src", "img/enemys/enemy-5.png");
+                document.querySelector(".loose__image_2 img").setAttribute("src", "img/enemys/enemy-6.png");
+            }
+        }), 100); else if (4 == +sessionStorage.getItem("current-level")) setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) {
+                document.querySelector(".loose__image_1 source").setAttribute("srcset", "img/enemys/enemy-7.webp");
+                document.querySelector(".loose__image_2 source").setAttribute("srcset", "img/enemys/enemy-8.webp");
+            } else {
+                document.querySelector(".loose__image_1 img").setAttribute("src", "img/enemys/enemy-7.png");
+                document.querySelector(".loose__image_2 img").setAttribute("src", "img/enemys/enemy-8.png");
+            }
+        }), 100);
     }
     function write_info_when_win() {
         let opened_heroes = get_arr_storrage("opened-heroes");
         if (1 == +sessionStorage.getItem("current-level")) {
             if (0 == opened_heroes.length) {
                 add_number_storrage("opened-heroes", 2);
-                if (document.documentElement.classList.contains("webp")) document.querySelector(".win__unlock-image source").setAttribute("srcset", "img/heroes/hero-2.webp"); else document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-2.png");
+                setTimeout((() => {
+                    if (document.documentElement.classList.contains("webp")) document.querySelector(".win__unlock-image source").setAttribute("srcset", "img/heroes/hero-2.webp"); else document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-2.png");
+                }), 100);
             } else if (1 == opened_heroes.length) {
                 add_number_storrage("opened-heroes", 3);
-                if (document.documentElement.classList.contains("webp")) document.querySelector(".win__unlock-image source").setAttribute("srcset", "img/heroes/hero-3.webp"); else document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-3.png");
+                setTimeout((() => {
+                    if (document.documentElement.classList.contains("webp")) document.querySelector(".win__unlock-image source").setAttribute("srcset", "img/heroes/hero-3.webp"); else document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-3.png");
+                }), 100);
             } else if (opened_heroes.length >= 2) document.querySelector(".win__unlock-item").classList.add("_hide");
             add_money(1e3, ".check", 1e3, 2e3);
             document.querySelector(".win__count").textContent = 1e3;
         } else if (2 == +sessionStorage.getItem("current-level")) {
             if (2 == opened_heroes.length) {
                 add_number_storrage("opened-heroes", 4);
-                if (document.documentElement.classList.contains("webp")) document.querySelector(".win__unlock-image source").setAttribute("srcset", "img/heroes/hero-4.webp"); else document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-4.png");
+                setTimeout((() => {
+                    if (document.documentElement.classList.contains("webp")) document.querySelector(".win__unlock-image source").setAttribute("srcset", "img/heroes/hero-4.webp"); else document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-4.png");
+                }), 100);
             } else if (3 == opened_heroes.length) {
                 add_number_storrage("opened-heroes", 5);
-                if (document.documentElement.classList.contains("webp")) document.querySelector(".win__unlock-image source").setAttribute("srcset", "img/heroes/hero-5.webp"); else document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-5.png");
+                setTimeout((() => {
+                    if (document.documentElement.classList.contains("webp")) document.querySelector(".win__unlock-image source").setAttribute("srcset", "img/heroes/hero-5.webp"); else document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-5.png");
+                }), 100);
             } else if (opened_heroes.length >= 4) document.querySelector(".win__unlock-item").classList.add("_hide");
             add_money(2e3, ".check", 1e3, 2e3);
             document.querySelector(".win__count").textContent = 2e3;
         } else if (3 == +sessionStorage.getItem("current-level")) {
             if (4 == opened_heroes.length) {
                 add_number_storrage("opened-heroes", 6);
-                if (document.documentElement.classList.contains("webp")) document.querySelector(".win__unlock-image source").setAttribute("srcset", "img/heroes/hero-6.webp"); else document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-6.png");
+                setTimeout((() => {
+                    if (document.documentElement.classList.contains("webp")) document.querySelector(".win__unlock-image source").setAttribute("srcset", "img/heroes/hero-6.webp"); else document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-6.png");
+                }), 100);
             } else if (5 == opened_heroes.length) {
                 add_number_storrage("opened-heroes", 7);
-                if (document.documentElement.classList.contains("webp")) document.querySelector(".win__unlock-image source").setAttribute("srcset", "img/heroes/hero-7.webp"); else document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-7.png");
+                setTimeout((() => {
+                    if (document.documentElement.classList.contains("webp")) document.querySelector(".win__unlock-image source").setAttribute("srcset", "img/heroes/hero-7.webp"); else document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-7.png");
+                }), 100);
             } else if (opened_heroes.length >= 6) document.querySelector(".win__unlock-item").classList.add("_hide");
             add_money(3e3, ".check", 1e3, 2e3);
             document.querySelector(".win__count").textContent = 3e3;
         } else if (4 == +sessionStorage.getItem("current-level")) {
             if (6 == opened_heroes.length) {
                 add_number_storrage("opened-heroes", 8);
-                if (document.documentElement.classList.contains("webp")) document.querySelector(".win__unlock-image source").setAttribute("srcset", "img/heroes/hero-8.webp"); else document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-8.png");
+                setTimeout((() => {
+                    if (document.documentElement.classList.contains("webp")) document.querySelector(".win__unlock-image source").setAttribute("srcset", "img/heroes/hero-8.webp"); else document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-8.png");
+                }), 100);
             } else if (opened_heroes.length >= 7) document.querySelector(".win__unlock-item").classList.add("_hide");
             add_money(5e3, ".check", 1e3, 2e3);
             document.querySelector(".win__count").textContent = 5e3;
