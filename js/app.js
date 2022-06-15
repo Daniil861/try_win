@@ -38,7 +38,7 @@
             el.textContent = sessionStorage.getItem("money");
         }));
     } else {
-        sessionStorage.setItem("money", 1e3);
+        sessionStorage.setItem("money", 1e5);
         if (document.querySelector(".check")) document.querySelectorAll(".check").forEach((el => {
             el.textContent = sessionStorage.getItem("money");
         }));
@@ -74,6 +74,23 @@
     }
     function get_random(min, max) {
         return Math.floor(Math.random() * (max - min) + min);
+    }
+    function get_random_2(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+    function add_money(count, block, delay, delay_off) {
+        let money = +sessionStorage.getItem("money") + count;
+        setTimeout((() => {
+            sessionStorage.setItem("money", money);
+            document.querySelectorAll(block).forEach((el => el.textContent = sessionStorage.getItem("money")));
+            document.querySelectorAll(block).forEach((el => el.classList.add("_anim-add-money")));
+        }), delay);
+        setTimeout((() => {
+            document.querySelectorAll(block).forEach((el => el.classList.remove("_anim-add-money")));
+        }), delay_off);
+    }
+    function transl_num_to_percent(all, num) {
+        return 100 * num / all;
     }
     function get_random_num_arr(mn, mx) {
         function get_rand(mn, mx) {
@@ -121,8 +138,6 @@
         sessionStorage.setItem(name, JSON.stringify(arr));
     }
     function get_arr_storrage(name) {
-        console.log(name);
-        console.log(sessionStorage.getItem(name));
         let arr = JSON.parse(sessionStorage.getItem(name));
         let numbers = arr;
         numbers.sort((function(a, b) {
@@ -168,6 +183,7 @@
     }
     if (document.querySelector(".wrapper__team") && sessionStorage.getItem("preloader")) {
         if (window_height > 600) document.querySelector(".content-item__bg img").setAttribute("src", "img/other/board-big.png");
+        if (sessionStorage.getItem("team-rule")) document.querySelector(".team__rules").classList.add("_hide");
         open_active_heroes();
         open_weapons_active_heroes();
         check_write_weapons();
@@ -383,7 +399,7 @@
                 let arr = [];
                 let arr_2 = [];
                 document.querySelectorAll(".heroe-team__sword").forEach((item => {
-                    if (item.closest(".heroe-team").dataset.hero == el.dataset.hero) {
+                    if (item.closest(".heroe-team").dataset.hero == el.dataset.hero) if (sessionStorage.getItem(`weapon-${el.dataset.hero}`)) {
                         arr = get_arr_storrage(`weapon-${el.dataset.hero}`);
                         arr_2.push(item);
                     }
@@ -417,13 +433,28 @@
         weapon_11: 1e4,
         weapon_12: 11e3
     };
+    const weapon_damage_coeff = {
+        weapon_1: 1,
+        weapon_2: 1.05,
+        weapon_3: 1.1,
+        weapon_4: 1.2,
+        weapon_5: 1.3,
+        weapon_6: 1.4,
+        weapon_7: 1.5,
+        weapon_8: 1.6,
+        weapon_9: 1.7,
+        weapon_10: 1.8,
+        weapon_11: 1.9,
+        weapon_12: 2
+    };
     if (document.querySelector(".shop") && sessionStorage.getItem("preloader")) {
         if (window_height > 600) document.querySelector(".content-item__bg img").setAttribute("src", "img/other/board-big.png");
         write_prices_heroes();
-        write_prices_wewapons();
+        write_prices_weapons();
         check_opened_heroes();
         check_bought_heroes();
         check_bought_weapons();
+        write_damage_weapons();
     } else if (document.querySelector(".shop") && !sessionStorage.getItem("preloader")) location.href = "index.html";
     function write_prices_heroes() {
         document.querySelectorAll(".item-heroes__button-price")[0].textContent = price_hero.hero_2;
@@ -434,7 +465,7 @@
         document.querySelectorAll(".item-heroes__button-price")[5].textContent = price_hero.hero_7;
         document.querySelectorAll(".item-heroes__button-price")[6].textContent = price_hero.hero_8;
     }
-    function write_prices_wewapons() {
+    function write_prices_weapons() {
         document.querySelectorAll(".item-weapons__button-price")[0].textContent = price_weapons.weapon_2;
         document.querySelectorAll(".item-weapons__button-price")[1].textContent = price_weapons.weapon_3;
         document.querySelectorAll(".item-weapons__button-price")[2].textContent = price_weapons.weapon_4;
@@ -446,6 +477,19 @@
         document.querySelectorAll(".item-weapons__button-price")[8].textContent = price_weapons.weapon_10;
         document.querySelectorAll(".item-weapons__button-price")[9].textContent = price_weapons.weapon_11;
         document.querySelectorAll(".item-weapons__button-price")[10].textContent = price_weapons.weapon_12;
+    }
+    function write_damage_weapons() {
+        document.querySelectorAll(".item-weapons__damage-info p")[0].innerHTML = `+${Math.floor(100 * weapon_damage_coeff.weapon_2 - 100)}%`;
+        document.querySelectorAll(".item-weapons__damage-info p")[1].innerHTML = `+${Math.floor(100 * weapon_damage_coeff.weapon_3 - 100)}%`;
+        document.querySelectorAll(".item-weapons__damage-info p")[2].innerHTML = `+${Math.floor(100 * weapon_damage_coeff.weapon_4 - 100)}%`;
+        document.querySelectorAll(".item-weapons__damage-info p")[3].innerHTML = `+${Math.floor(100 * weapon_damage_coeff.weapon_5 - 100)}%`;
+        document.querySelectorAll(".item-weapons__damage-info p")[4].innerHTML = `+${Math.floor(100 * weapon_damage_coeff.weapon_6 - 100)}%`;
+        document.querySelectorAll(".item-weapons__damage-info p")[5].innerHTML = `+${Math.floor(100 * weapon_damage_coeff.weapon_7 - 100)}%`;
+        document.querySelectorAll(".item-weapons__damage-info p")[6].innerHTML = `+${Math.floor(100 * weapon_damage_coeff.weapon_8 - 100)}%`;
+        document.querySelectorAll(".item-weapons__damage-info p")[7].innerHTML = `+${Math.floor(100 * weapon_damage_coeff.weapon_9 - 100)}%`;
+        document.querySelectorAll(".item-weapons__damage-info p")[8].innerHTML = `+${Math.floor(100 * weapon_damage_coeff.weapon_10 - 100)}%`;
+        document.querySelectorAll(".item-weapons__damage-info p")[9].innerHTML = `+${Math.floor(100 * weapon_damage_coeff.weapon_11 - 100)}%`;
+        document.querySelectorAll(".item-weapons__damage-info p")[10].innerHTML = `+${Math.floor(100 * weapon_damage_coeff.weapon_12 - 100)}%`;
     }
     function chek_buy_hero(number) {
         if (2 == number) if (+sessionStorage.getItem("money") >= price_hero.hero_2) {
@@ -530,13 +574,66 @@
     const config_game = {
         level: +sessionStorage.getItem("current-level"),
         goal: 1,
-        timer_hero_1: false,
-        timer_hero_2: false
+        start_life_hero_1: 0,
+        start_life_hero_2: 0,
+        start_life_enemy_1: 0,
+        start_life_enemy_2: 0,
+        current_life_hero_1: 0,
+        current_life_hero_2: 0,
+        current_life_enemy_1: 0,
+        current_life_enemy_2: 0,
+        damage_hero_1: 0,
+        damage_hero_2: 0,
+        damage_enemy_1: 0,
+        damage_enemy_2: 0,
+        stop_game: false
+    };
+    const health_heroes = {
+        hero_1: 200,
+        hero_2: 300,
+        hero_3: 400,
+        hero_4: 500,
+        hero_5: 600,
+        hero_6: 700,
+        hero_7: 800,
+        hero_8: 1e3
+    };
+    const health_enemys = {
+        enemy_1: 180,
+        enemy_2: 280,
+        enemy_3: 380,
+        enemy_4: 480,
+        enemy_5: 580,
+        enemy_6: 680,
+        enemy_7: 780,
+        enemy_8: 1e3
+    };
+    const damage_heroes = {
+        hero_1: 50,
+        hero_2: 60,
+        hero_3: 70,
+        hero_4: 80,
+        hero_5: 90,
+        hero_6: 100,
+        hero_7: 110,
+        hero_8: 120
+    };
+    const damage_enemys = {
+        enemy_1: 60,
+        enemy_2: 80,
+        enemy_3: 100,
+        enemy_4: 120,
+        enemy_5: 140,
+        enemy_6: 160,
+        enemy_7: 180,
+        enemy_8: 250
     };
     if (document.querySelector(".game") && sessionStorage.getItem("preloader")) {
         document.querySelector(".info-game__level p").textContent = `Level ${config_game.level}`;
         select_write_enemys();
         select_write_heroes();
+        write_start_characterisitcs();
+        if (3 == +sessionStorage.getItem("current-level")) document.querySelector(".field__image_1").style.width = "100%";
     } else if (document.querySelector(".game") && !sessionStorage.getItem("preloader")) location.href = "index.html";
     function select_write_enemys() {
         if (1 == config_game.level) {
@@ -567,11 +664,484 @@
             document.querySelector(".field__sword_2 img").setAttribute("src", `img/weapons/sword-${sessionStorage.getItem("current-weapon-2")}.png`);
         }
     }
+    function write_start_characterisitcs() {
+        write_life_damage_hero_1();
+        write_life_damage_hero_2();
+        write_life_damage_enemys();
+        write_damage_hero_1();
+        write_damage_hero_2();
+    }
+    function write_life_damage_hero_1() {
+        if (sessionStorage.getItem("current-hero-1")) {
+            let hero_1 = +sessionStorage.getItem("current-hero-1");
+            if (1 == hero_1) {
+                config_game.start_life_hero_1 = health_heroes.hero_1;
+                config_game.damage_hero_1 = damage_heroes.hero_1;
+            } else if (2 == hero_1) {
+                config_game.start_life_hero_1 = health_heroes.hero_2;
+                config_game.damage_hero_1 = damage_heroes.hero_2;
+            } else if (3 == hero_1) {
+                config_game.start_life_hero_1 = health_heroes.hero_3;
+                config_game.damage_hero_1 = damage_heroes.hero_3;
+            } else if (4 == hero_1) {
+                config_game.start_life_hero_1 = health_heroes.hero_4;
+                config_game.damage_hero_1 = damage_heroes.hero_4;
+            } else if (5 == hero_1) {
+                config_game.start_life_hero_1 = health_heroes.hero_5;
+                config_game.damage_hero_1 = damage_heroes.hero_5;
+            } else if (6 == hero_1) {
+                config_game.start_life_hero_1 = health_heroes.hero_6;
+                config_game.damage_hero_1 = damage_heroes.hero_6;
+            } else if (7 == hero_1) {
+                config_game.start_life_hero_1 = health_heroes.hero_7;
+                config_game.damage_hero_1 = damage_heroes.hero_7;
+            } else if (8 == hero_1) {
+                config_game.start_life_hero_1 = health_heroes.hero_8;
+                config_game.damage_hero_1 = damage_heroes.hero_8;
+            }
+        } else {
+            config_game.start_life_hero_1 = health_heroes.hero_1;
+            config_game.damage_hero_1 = damage_heroes.hero_1;
+        }
+        config_game.current_life_hero_1 = config_game.start_life_hero_1;
+    }
+    function write_life_damage_hero_2() {
+        if (sessionStorage.getItem("current-hero-2")) {
+            let hero_2 = +sessionStorage.getItem("current-hero-2");
+            if (1 == hero_2) {
+                config_game.start_life_hero_2 = health_heroes.hero_1;
+                config_game.damage_hero_2 = damage_heroes.hero_1;
+            } else if (2 == hero_2) {
+                config_game.start_life_hero_2 = health_heroes.hero_2;
+                config_game.damage_hero_2 = damage_heroes.hero_2;
+            } else if (3 == hero_2) {
+                config_game.start_life_hero_2 = health_heroes.hero_3;
+                config_game.damage_hero_2 = damage_heroes.hero_3;
+            } else if (4 == hero_2) {
+                config_game.start_life_hero_2 = health_heroes.hero_4;
+                config_game.damage_hero_2 = damage_heroes.hero_4;
+            } else if (5 == hero_2) {
+                config_game.start_life_hero_2 = health_heroes.hero_5;
+                config_game.damage_hero_2 = damage_heroes.hero_5;
+            } else if (6 == hero_2) {
+                config_game.start_life_hero_2 = health_heroes.hero_6;
+                config_game.damage_hero_2 = damage_heroes.hero_6;
+            } else if (7 == hero_2) {
+                config_game.start_life_hero_2 = health_heroes.hero_7;
+                config_game.damage_hero_2 = damage_heroes.hero_7;
+            } else if (8 == hero_2) {
+                config_game.start_life_hero_2 = health_heroes.hero_8;
+                config_game.damage_hero_2 = damage_heroes.hero_8;
+            }
+        } else {
+            config_game.start_life_hero_2 = health_heroes.hero_1;
+            config_game.damage_hero_2 = damage_heroes.hero_1;
+        }
+        config_game.current_life_hero_2 = config_game.start_life_hero_2;
+    }
+    function write_life_damage_enemys() {
+        let level = +sessionStorage.getItem("current-level");
+        let coeff = get_random_2(.7, 1);
+        if (1 == level) {
+            config_game.start_life_enemy_1 = Math.floor(health_enemys.enemy_1 * coeff);
+            config_game.damage_enemy_1 = damage_enemys.enemy_1;
+            config_game.start_life_enemy_2 = Math.floor(health_enemys.enemy_2 * coeff);
+            config_game.damage_enemy_2 = damage_enemys.enemy_2;
+        } else if (2 == level) {
+            config_game.start_life_enemy_1 = Math.floor(health_enemys.enemy_3 * coeff);
+            config_game.damage_enemy_1 = damage_enemys.enemy_3;
+            config_game.start_life_enemy_2 = Math.floor(health_enemys.enemy_4 * coeff);
+            config_game.damage_enemy_2 = damage_enemys.enemy_4;
+        } else if (3 == level) {
+            config_game.start_life_enemy_1 = Math.floor(health_enemys.enemy_5 * coeff);
+            config_game.damage_enemy_1 = damage_enemys.enemy_5;
+            config_game.start_life_enemy_2 = Math.floor(health_enemys.enemy_6 * coeff);
+            config_game.damage_enemy_2 = damage_enemys.enemy_6;
+        } else if (4 == level) {
+            config_game.start_life_enemy_1 = Math.floor(health_enemys.enemy_7 * coeff);
+            config_game.damage_enemy_1 = damage_enemys.enemy_7;
+            config_game.start_life_enemy_2 = Math.floor(health_enemys.enemy_8 * coeff);
+            config_game.damage_enemy_2 = damage_enemys.enemy_8;
+        }
+        config_game.current_life_enemy_1 = config_game.start_life_enemy_1;
+        config_game.current_life_enemy_2 = config_game.start_life_enemy_2;
+    }
+    function write_damage_hero_1() {
+        if (sessionStorage.getItem("current-weapon-1")) {
+            let weapon_1 = +sessionStorage.getItem("current-weapon-1");
+            if (1 == weapon_1) config_game.damage_hero_1 = config_game.damage_hero_1 * weapon_damage_coeff.weapon_1; else if (2 == weapon_1) config_game.damage_hero_1 = config_game.damage_hero_1 * weapon_damage_coeff.weapon_2; else if (3 == weapon_1) config_game.damage_hero_1 = config_game.damage_hero_1 * weapon_damage_coeff.weapon_3; else if (4 == weapon_1) config_game.damage_hero_1 = config_game.damage_hero_1 * weapon_damage_coeff.weapon_4; else if (5 == weapon_1) config_game.damage_hero_1 = config_game.damage_hero_1 * weapon_damage_coeff.weapon_5; else if (6 == weapon_1) config_game.damage_hero_1 = config_game.damage_hero_1 * weapon_damage_coeff.weapon_6; else if (7 == weapon_1) config_game.damage_hero_1 = config_game.damage_hero_1 * weapon_damage_coeff.weapon_7; else if (8 == weapon_1) config_game.damage_hero_1 = config_game.damage_hero_1 * weapon_damage_coeff.weapon_8; else if (9 == weapon_1) config_game.damage_hero_1 = config_game.damage_hero_1 * weapon_damage_coeff.weapon_9; else if (10 == weapon_1) config_game.damage_hero_1 = config_game.damage_hero_1 * weapon_damage_coeff.weapon_10; else if (11 == weapon_1) config_game.damage_hero_1 = config_game.damage_hero_1 * weapon_damage_coeff.weapon_11; else if (12 == weapon_1) config_game.damage_hero_1 = config_game.damage_hero_1 * weapon_damage_coeff.weapon_12;
+        } else config_game.damage_hero_1 = config_game.damage_hero_1 * weapon_damage_coeff.weapon_1;
+    }
+    function write_damage_hero_2() {
+        if (sessionStorage.getItem("current-weapon-2")) {
+            let weapon_2 = +sessionStorage.getItem("current-weapon-2");
+            if (1 == weapon_2) config_game.damage_hero_2 = config_game.damage_hero_2 * weapon_damage_coeff.weapon_1; else if (2 == weapon_2) config_game.damage_hero_2 = config_game.damage_hero_2 * weapon_damage_coeff.weapon_2; else if (3 == weapon_2) config_game.damage_hero_2 = config_game.damage_hero_2 * weapon_damage_coeff.weapon_3; else if (4 == weapon_2) config_game.damage_hero_2 = config_game.damage_hero_2 * weapon_damage_coeff.weapon_4; else if (5 == weapon_2) config_game.damage_hero_2 = config_game.damage_hero_2 * weapon_damage_coeff.weapon_5; else if (6 == weapon_2) config_game.damage_hero_2 = config_game.damage_hero_2 * weapon_damage_coeff.weapon_6; else if (7 == weapon_2) config_game.damage_hero_2 = config_game.damage_hero_2 * weapon_damage_coeff.weapon_7; else if (8 == weapon_2) config_game.damage_hero_2 = config_game.damage_hero_2 * weapon_damage_coeff.weapon_8; else if (9 == weapon_2) config_game.damage_hero_2 = config_game.damage_hero_2 * weapon_damage_coeff.weapon_9; else if (10 == weapon_2) config_game.damage_hero_2 = config_game.damage_hero_2 * weapon_damage_coeff.weapon_10; else if (11 == weapon_2) config_game.damage_hero_2 = config_game.damage_hero_2 * weapon_damage_coeff.weapon_11; else if (12 == weapon_2) config_game.damage_hero_2 = config_game.damage_hero_2 * weapon_damage_coeff.weapon_12;
+        } else config_game.damage_hero_2 = config_game.damage_hero_2 * weapon_damage_coeff.weapon_1;
+    }
+    function get_random_anim_when_shot(item, number) {
+        let arr = [ 1, 2, 3 ];
+        let num = get_random(0, 3);
+        if (1 == number) {
+            document.querySelector(item).classList.add(`_hit-${arr[num]}`);
+            setTimeout((() => {
+                document.querySelector(item).classList.remove(`_hit-${arr[num]}`);
+            }), 1e3);
+        } else if (2 == number) {
+            arr = [ 4, 5, 6 ];
+            document.querySelector(item).classList.add(`_hit-${arr[num]}`);
+            setTimeout((() => {
+                document.querySelector(item).classList.remove(`_hit-${arr[num]}`);
+            }), 1e3);
+        }
+    }
+    function check_damage_heroes() {
+        if (1 == config_game.goal) if (!document.querySelector(".field__evil_1").classList.contains("_loose") && !document.querySelector(".field__evil_2").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__evil_1", 2);
+            }), 2500);
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__evil_2", 2);
+            }), 3e3);
+            setTimeout((() => {
+                let coeff_atack_1 = get_random_2(.7, 1);
+                let coeff_atack_2 = get_random_2(.7, 1);
+                config_game.current_life_enemy_1 = config_game.current_life_enemy_1 - config_game.damage_hero_1 * coeff_atack_1;
+                config_game.current_life_enemy_2 = config_game.current_life_enemy_2 - config_game.damage_hero_2 * coeff_atack_2;
+                document.querySelector(".field__enemy-energy_1").style.width = `${transl_num_to_percent(config_game.start_life_enemy_1, config_game.current_life_enemy_1)}%`;
+                create_damage_info(".field__evil_1", 1, Math.floor(config_game.damage_hero_1 * coeff_atack_1));
+                setTimeout((() => {
+                    document.querySelector(".field__enemy-energy_2").style.width = `${transl_num_to_percent(config_game.start_life_enemy_2, config_game.current_life_enemy_2)}%`;
+                    create_damage_info(".field__evil_2", 2, Math.floor(config_game.damage_hero_2 * coeff_atack_2));
+                }), 500);
+            }), 3e3);
+        } else if (!document.querySelector(".field__evil_1").classList.contains("_loose") && document.querySelector(".field__evil_2").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__evil_1", 2);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_1 = get_random_2(.7, 1);
+                let coeff_atack_2 = get_random_2(.7, 1);
+                config_game.current_life_enemy_1 = config_game.current_life_enemy_1 - config_game.damage_hero_1 * coeff_atack_1 - config_game.damage_hero_2 * coeff_atack_2;
+                document.querySelector(".field__enemy-energy_1").style.width = `${transl_num_to_percent(config_game.start_life_enemy_1, config_game.current_life_enemy_1)}%`;
+                create_damage_info(".field__evil_1", 1, Math.floor(config_game.damage_hero_1 * coeff_atack_1 + config_game.damage_hero_2 * coeff_atack_2));
+            }), 3e3);
+        } else if (document.querySelector(".field__evil_1").classList.contains("_loose") && !document.querySelector(".field__evil_2").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__evil_2", 2);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_1 = get_random_2(.7, 1);
+                let coeff_atack_2 = get_random_2(.7, 1);
+                config_game.current_life_enemy_2 = config_game.current_life_enemy_2 - config_game.damage_hero_1 * coeff_atack_1 - config_game.damage_hero_2 * coeff_atack_2;
+                document.querySelector(".field__enemy-energy_2").style.width = `${transl_num_to_percent(config_game.start_life_enemy_2, config_game.current_life_enemy_2)}%`;
+                create_damage_info(".field__evil_2", 2, Math.floor(config_game.damage_hero_1 * coeff_atack_1 + config_game.damage_hero_2 * coeff_atack_2));
+            }), 3e3);
+        } else if (!document.querySelector(".field__evil_1").classList.contains("_loose") && !document.querySelector(".field__evil_2").classList.contains("_loose") && document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__evil_2", 2);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_2 = get_random_2(.7, 1);
+                config_game.current_life_enemy_2 = config_game.current_life_enemy_2 - config_game.damage_hero_2 * coeff_atack_2;
+                document.querySelector(".field__enemy-energy_2").style.width = `${transl_num_to_percent(config_game.start_life_enemy_2, config_game.current_life_enemy_2)}%`;
+                create_damage_info(".field__evil_2", 2, Math.floor(config_game.damage_hero_2 * coeff_atack_2));
+            }), 3e3);
+        } else if (!document.querySelector(".field__evil_1").classList.contains("_loose") && !document.querySelector(".field__evil_2").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__evil_1", 2);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_1 = get_random_2(.7, 1);
+                config_game.current_life_enemy_1 = config_game.current_life_enemy_1 - config_game.damage_hero_1 * coeff_atack_1;
+                document.querySelector(".field__enemy-energy_1").style.width = `${transl_num_to_percent(config_game.start_life_enemy_1, config_game.current_life_enemy_1)}%`;
+                create_damage_info(".field__evil_1", 1, Math.floor(config_game.damage_hero_1 * coeff_atack_1));
+            }), 3e3);
+        } else if (!document.querySelector(".field__evil_1").classList.contains("_loose") && document.querySelector(".field__evil_2").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__evil_1", 2);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_1 = get_random_2(.7, 1);
+                config_game.current_life_enemy_1 = config_game.current_life_enemy_1 - config_game.damage_hero_1 * coeff_atack_1;
+                document.querySelector(".field__enemy-energy_1").style.width = `${transl_num_to_percent(config_game.start_life_enemy_1, config_game.current_life_enemy_1)}%`;
+                create_damage_info(".field__evil_1", 1, Math.floor(config_game.damage_hero_1 * coeff_atack_1));
+            }), 3e3);
+        } else if (document.querySelector(".field__evil_1").classList.contains("_loose") && !document.querySelector(".field__evil_2").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__evil_2", 2);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_1 = get_random_2(.7, 1);
+                config_game.current_life_enemy_2 = config_game.current_life_enemy_2 - config_game.damage_hero_1 * coeff_atack_1;
+                document.querySelector(".field__enemy-energy_2").style.width = `${transl_num_to_percent(config_game.start_life_enemy_2, config_game.current_life_enemy_2)}%`;
+                create_damage_info(".field__evil_2", 2, Math.floor(config_game.damage_hero_1 * coeff_atack_1));
+            }), 3e3);
+        } else if (!document.querySelector(".field__evil_1").classList.contains("_loose") && document.querySelector(".field__evil_2").classList.contains("_loose") && document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__evil_1", 2);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_2 = get_random_2(.7, 1);
+                config_game.current_life_enemy_1 = config_game.current_life_enemy_1 - config_game.damage_hero_2 * coeff_atack_2;
+                document.querySelector(".field__enemy-energy_1").style.width = `${transl_num_to_percent(config_game.start_life_enemy_1, config_game.current_life_enemy_1)}%`;
+                create_damage_info(".field__evil_1", 1, Math.floor(config_game.damage_hero_2 * coeff_atack_2));
+            }), 3e3);
+        } else if (document.querySelector(".field__evil_1").classList.contains("_loose") && !document.querySelector(".field__evil_2").classList.contains("_loose") && document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__evil_2", 2);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_2 = get_random_2(.7, 1);
+                config_game.current_life_enemy_2 = config_game.current_life_enemy_2 - config_game.damage_hero_2 * coeff_atack_2;
+                document.querySelector(".field__enemy-energy_2").style.width = `${transl_num_to_percent(config_game.start_life_enemy_2, config_game.current_life_enemy_2)}%`;
+                create_damage_info(".field__evil_2", 2, Math.floor(config_game.damage_hero_2 * coeff_atack_2));
+            }), 3e3);
+        }
+    }
+    function check_damage_enemys() {
+        if (2 == config_game.goal) if (!document.querySelector(".field__evil_1").classList.contains("_loose") && !document.querySelector(".field__evil_2").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__heroe-inner_1", 1);
+            }), 2500);
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__heroe-inner_2", 1);
+            }), 3e3);
+            setTimeout((() => {
+                let coeff_atack_1 = get_random_2(.5, 1);
+                let coeff_atack_2 = get_random_2(.5, 1);
+                config_game.current_life_hero_1 = config_game.current_life_hero_1 - config_game.damage_enemy_1 * coeff_atack_1;
+                config_game.current_life_hero_2 = config_game.current_life_hero_2 - config_game.damage_enemy_2 * coeff_atack_2;
+                document.querySelector(".field__hero-energy_1").style.width = `${transl_num_to_percent(config_game.start_life_hero_1, config_game.current_life_hero_1)}%`;
+                create_damage_info(".field__heroe-inner_1", 1, Math.floor(config_game.damage_enemy_1 * coeff_atack_1));
+                setTimeout((() => {
+                    document.querySelector(".field__hero-energy_2").style.width = `${transl_num_to_percent(config_game.start_life_hero_2, config_game.current_life_hero_2)}%`;
+                    create_damage_info(".field__heroe-inner_2", 2, Math.floor(config_game.damage_enemy_2 * coeff_atack_2));
+                }), 500);
+            }), 3e3);
+        } else if (!document.querySelector(".field__evil_1").classList.contains("_loose") && document.querySelector(".field__evil_2").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__heroe-inner_1", 1);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_1 = get_random_2(.5, 1);
+                config_game.current_life_hero_1 = config_game.current_life_hero_1 - config_game.damage_enemy_1 * coeff_atack_1;
+                document.querySelector(".field__hero-energy_1").style.width = `${transl_num_to_percent(config_game.start_life_hero_1, config_game.current_life_hero_1)}%`;
+                create_damage_info(".field__heroe-inner_1", 1, Math.floor(config_game.damage_enemy_1 * coeff_atack_1));
+            }), 3e3);
+        } else if (document.querySelector(".field__evil_1").classList.contains("_loose") && !document.querySelector(".field__evil_2").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__heroe-inner_2", 1);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_2 = get_random_2(.5, 1);
+                config_game.current_life_hero_2 = config_game.current_life_hero_2 - config_game.damage_enemy_2 * coeff_atack_2;
+                document.querySelector(".field__hero-energy_2").style.width = `${transl_num_to_percent(config_game.start_life_hero_2, config_game.current_life_hero_2)}%`;
+                create_damage_info(".field__heroe-inner_2", 2, Math.floor(config_game.damage_enemy_2 * coeff_atack_2));
+            }), 3e3);
+        } else if (!document.querySelector(".field__evil_1").classList.contains("_loose") && !document.querySelector(".field__evil_2").classList.contains("_loose") && document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__heroe-inner_2", 1);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_1 = get_random_2(.5, 1);
+                let coeff_atack_2 = get_random_2(.5, 1);
+                config_game.current_life_hero_2 = config_game.current_life_hero_2 - config_game.damage_enemy_2 * coeff_atack_2 - config_game.damage_enemy_1 * coeff_atack_1;
+                document.querySelector(".field__hero-energy_2").style.width = `${transl_num_to_percent(config_game.start_life_hero_2, config_game.current_life_hero_2)}%`;
+                create_damage_info(".field__heroe-inner_2", 2, Math.floor(config_game.damage_enemy_2 * coeff_atack_2));
+            }), 3e3);
+        } else if (!document.querySelector(".field__evil_1").classList.contains("_loose") && !document.querySelector(".field__evil_2").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__heroe-inner_1", 1);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_1 = get_random_2(.5, 1);
+                let coeff_atack_2 = get_random_2(.5, 1);
+                config_game.current_life_hero_1 = config_game.current_life_hero_1 - config_game.damage_enemy_1 * coeff_atack_1 - config_game.damage_enemy_2 * coeff_atack_2;
+                document.querySelector(".field__hero-energy_1").style.width = `${transl_num_to_percent(config_game.start_life_hero_1, config_game.current_life_hero_1)}%`;
+                create_damage_info(".field__heroe-inner_1", 1, Math.floor(config_game.damage_enemy_1 * coeff_atack_1));
+            }), 3e3);
+        } else if (!document.querySelector(".field__evil_1").classList.contains("_loose") && document.querySelector(".field__evil_2").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__heroe-inner_1", 1);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_1 = get_random_2(.5, 1);
+                config_game.current_life_hero_1 = config_game.current_life_hero_1 - config_game.damage_enemy_1 * coeff_atack_1;
+                document.querySelector(".field__hero-energy_1").style.width = `${transl_num_to_percent(config_game.start_life_hero_1, config_game.current_life_hero_1)}%`;
+                create_damage_info(".field__heroe-inner_1", 1, Math.floor(config_game.damage_enemy_1 * coeff_atack_1));
+            }), 3e3);
+        } else if (document.querySelector(".field__evil_1").classList.contains("_loose") && !document.querySelector(".field__evil_2").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__heroe-inner_1", 1);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_2 = get_random_2(.5, 1);
+                config_game.current_life_hero_1 = config_game.current_life_hero_1 - config_game.damage_enemy_2 * coeff_atack_2;
+                document.querySelector(".field__hero-energy_1").style.width = `${transl_num_to_percent(config_game.start_life_hero_1, config_game.current_life_hero_1)}%`;
+                create_damage_info(".field__heroe-inner_1", 1, Math.floor(config_game.damage_enemy_2 * coeff_atack_2));
+            }), 3e3);
+        } else if (!document.querySelector(".field__evil_1").classList.contains("_loose") && document.querySelector(".field__evil_2").classList.contains("_loose") && document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__heroe-inner_2", 1);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_1 = get_random_2(.5, 1);
+                config_game.current_life_hero_2 = config_game.current_life_hero_2 - config_game.damage_enemy_1 * coeff_atack_1;
+                document.querySelector(".field__hero-energy_2").style.width = `${transl_num_to_percent(config_game.start_life_hero_2, config_game.current_life_hero_2)}%`;
+                create_damage_info(".field__heroe-inner_2", 2, Math.floor(config_game.damage_enemy_1 * coeff_atack_1));
+            }), 3e3);
+        } else if (document.querySelector(".field__evil_1").classList.contains("_loose") && !document.querySelector(".field__evil_2").classList.contains("_loose") && document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && !document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            setTimeout((() => {
+                get_random_anim_when_shot(".field__heroe-inner_2", 1);
+            }), 2500);
+            setTimeout((() => {
+                let coeff_atack_2 = get_random_2(.5, 1);
+                config_game.current_life_hero_2 = config_game.current_life_hero_2 - config_game.damage_enemy_2 * coeff_atack_2;
+                document.querySelector(".field__hero-energy_2").style.width = `${transl_num_to_percent(config_game.start_life_hero_2, config_game.current_life_hero_2)}%`;
+                create_damage_info(".field__heroe-inner_2", 2, Math.floor(config_game.damage_enemy_2 * coeff_atack_2));
+            }), 3e3);
+        }
+    }
+    function create_damage_info(item, num_turn, count) {
+        let text = document.createElement("div");
+        text.classList.add("field__text");
+        if (1 == num_turn) text.classList.add("field__text_left"); else if (2 == num_turn) text.classList.add("field__text_right");
+        text.textContent = `-${count}hp`;
+        document.querySelector(item).append(text);
+        setTimeout((() => {
+            text.remove();
+        }), 1600);
+    }
+    function check_game_over() {
+        check_write_energy_and_image_when_loose();
+        check_loose_all_heroes();
+        check_loose_all_enemys();
+    }
+    function check_write_energy_and_image_when_loose() {
+        if (config_game.current_life_enemy_1 < 0) {
+            config_game.current_life_enemy_1 = 0;
+            document.querySelector(".field__enemy-energy_1").style.width = `0%`;
+            change_image_if_dead(".field__image_1");
+        }
+        if (config_game.current_life_enemy_2 < 0) {
+            config_game.current_life_enemy_2 = 0;
+            document.querySelector(".field__enemy-energy_2").style.width = `0%`;
+            change_image_if_dead(".field__image_2");
+        }
+        if (config_game.current_life_hero_1 < 0) {
+            config_game.current_life_hero_1 = 0;
+            document.querySelector(".field__hero-energy_1").style.width = `0%`;
+            if (document.querySelector(".field__weapon-item_1")) document.querySelector(".field__weapon-item_1").remove();
+            change_image_if_dead(".field__man_1");
+        }
+        if (config_game.current_life_hero_2 < 0) {
+            config_game.current_life_hero_2 = 0;
+            document.querySelector(".field__hero-energy_2").style.width = `0%`;
+            if (document.querySelector(".field__weapon-item_2")) document.querySelector(".field__weapon-item_2").remove();
+            change_image_if_dead(".field__man_2");
+        }
+    }
+    function change_image_if_dead(item) {
+        document.querySelector(`${item} img`).setAttribute("src", "img/icons/gameover.png");
+        document.querySelector(item).classList.add("_loose");
+        if (document.querySelector(item).closest(".field__evil")) document.querySelector(item).closest(".field__evil").classList.add("_loose"); else if (document.querySelector(item).closest(".field__heroe-inner")) document.querySelector(item).closest(".field__heroe-inner").classList.add("_loose");
+    }
+    function check_loose_all_heroes() {
+        if (document.querySelector(".field__heroe-inner_1").classList.contains("_loose") && document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            config_game.stop_game = true;
+            write_enemys_when_loose();
+            setTimeout((() => {
+                document.querySelector(".loose").classList.remove("_hide");
+            }), 500);
+        }
+    }
+    function check_loose_all_enemys() {
+        if (document.querySelector(".field__evil_1").classList.contains("_loose") && document.querySelector(".field__evil_2").classList.contains("_loose")) {
+            config_game.stop_game = true;
+            write_info_when_win();
+            setTimeout((() => {
+                document.querySelector(".win").classList.remove("_hide");
+            }), 1e3);
+        }
+    }
+    function write_enemys_when_loose() {
+        if (1 == +sessionStorage.getItem("current-level")) {
+            document.querySelector(".loose__image_1 img").setAttribute("src", "img/enemys/enemy-1.png");
+            document.querySelector(".loose__image_2 img").setAttribute("src", "img/enemys/enemy-2.png");
+        } else if (2 == +sessionStorage.getItem("current-level")) {
+            document.querySelector(".loose__image_1 img").setAttribute("src", "img/enemys/enemy-3.png");
+            document.querySelector(".loose__image_2 img").setAttribute("src", "img/enemys/enemy-4.png");
+        } else if (3 == +sessionStorage.getItem("current-level")) {
+            document.querySelector(".loose__image_1 img").setAttribute("src", "img/enemys/enemy-5.png");
+            document.querySelector(".loose__image_2 img").setAttribute("src", "img/enemys/enemy-6.png");
+        } else if (4 == +sessionStorage.getItem("current-level")) {
+            document.querySelector(".loose__image_1 img").setAttribute("src", "img/enemys/enemy-7.png");
+            document.querySelector(".loose__image_2 img").setAttribute("src", "img/enemys/enemy-8.png");
+        }
+    }
+    function write_info_when_win() {
+        let opened_heroes = get_arr_storrage("opened-heroes");
+        if (1 == +sessionStorage.getItem("current-level")) {
+            if (0 == opened_heroes.length) {
+                add_number_storrage("opened-heroes", 2);
+                document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-2.png");
+            } else if (1 == opened_heroes.length) {
+                add_number_storrage("opened-heroes", 3);
+                document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-3.png");
+            } else if (opened_heroes.length >= 2) document.querySelector(".win__unlock-item").classList.add("_hide");
+            add_money(1e3, ".check", 1e3, 2e3);
+            document.querySelector(".win__count").textContent = 1e3;
+        } else if (2 == +sessionStorage.getItem("current-level")) {
+            if (2 == opened_heroes.length) {
+                add_number_storrage("opened-heroes", 4);
+                document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-4.png");
+            } else if (3 == opened_heroes.length) {
+                add_number_storrage("opened-heroes", 5);
+                document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-5.png");
+            } else if (opened_heroes.length >= 4) document.querySelector(".win__unlock-item").classList.add("_hide");
+            add_money(2e3, ".check", 1e3, 2e3);
+            document.querySelector(".win__count").textContent = 2e3;
+        } else if (3 == +sessionStorage.getItem("current-level")) {
+            if (4 == opened_heroes.length) {
+                add_number_storrage("opened-heroes", 6);
+                document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-6.png");
+            } else if (5 == opened_heroes.length) {
+                add_number_storrage("opened-heroes", 7);
+                document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-7.png");
+            } else if (opened_heroes.length >= 6) document.querySelector(".win__unlock-item").classList.add("_hide");
+            add_money(3e3, ".check", 1e3, 2e3);
+            document.querySelector(".win__count").textContent = 3e3;
+        } else if (4 == +sessionStorage.getItem("current-level")) {
+            if (6 == opened_heroes.length) {
+                add_number_storrage("opened-heroes", 8);
+                document.querySelector(".win__unlock-image img").setAttribute("src", "img/heroes/hero-8.png");
+            } else if (opened_heroes.length >= 7) document.querySelector(".win__unlock-item").classList.add("_hide");
+            add_money(5e3, ".check", 1e3, 2e3);
+            document.querySelector(".win__count").textContent = 5e3;
+        }
+    }
     function start_game() {
         config_game.goal = select_first_goal();
         setTimeout((() => {
+            play_game();
+        }), 500);
+    }
+    function goal_hero_1() {
+        setTimeout((() => {
+            moove_hero(".field__heroe-inner_1", 1);
+        }), 1e3);
+    }
+    function goal_hero_2() {
+        setTimeout((() => {
+            moove_hero(".field__heroe-inner_2", 2);
+        }), 1500);
+    }
+    function goal_enemy_1() {
+        setTimeout((() => {
             moove_enemy(".field__evil_1", 1);
         }), 1e3);
+    }
+    function goal_enemy_2() {
         setTimeout((() => {
             moove_enemy(".field__evil_2", 2);
         }), 1500);
@@ -579,17 +1149,96 @@
     function select_first_goal() {
         return get_random(1, 3);
     }
+    function play_game() {
+        if (1 == config_game.goal && config_game.current_life_hero_1 > 0 && config_game.current_life_hero_2 > 0) {
+            goal_hero_1();
+            goal_hero_2();
+            check_damage_heroes();
+            config_game.goal = 2;
+        } else if (1 == config_game.goal && config_game.current_life_hero_1 <= 0 && config_game.current_life_hero_2 > 0) {
+            goal_hero_2();
+            check_damage_heroes();
+            config_game.goal = 2;
+        } else if (1 == config_game.goal && config_game.current_life_hero_1 > 0 && config_game.current_life_hero_2 <= 0) {
+            goal_hero_1();
+            check_damage_heroes();
+            config_game.goal = 2;
+        } else if (2 == config_game.goal && config_game.current_life_enemy_1 > 0 && config_game.current_life_enemy_2 > 0) {
+            goal_enemy_1();
+            goal_enemy_2();
+            check_damage_enemys();
+            config_game.goal = 1;
+        } else if (2 == config_game.goal && config_game.current_life_enemy_1 <= 0 && config_game.current_life_enemy_2 > 0) {
+            goal_enemy_2();
+            check_damage_enemys();
+            config_game.goal = 1;
+        } else if (2 == config_game.goal && config_game.current_life_enemy_1 > 0 && config_game.current_life_enemy_2 <= 0) {
+            goal_enemy_2();
+            check_damage_enemys();
+            config_game.goal = 1;
+        }
+        setTimeout((() => {
+            check_game_over();
+        }), 3100);
+        setTimeout((() => {
+            if (config_game.stop_game) return false;
+            return play_game();
+        }), 5e3);
+    }
+    function moove_hero(item, num) {
+        let arr_1 = [ 1, 3, 5 ];
+        let arr_2 = [ 2, 4, 6 ];
+        let num_1 = get_random(0, 3);
+        let num_2 = get_random(0, 3);
+        if (1 == num && !document.querySelector(".field__evil_1").classList.contains("_loose")) {
+            document.querySelector(item).classList.add(`_moove-${arr_1[num_1]}`);
+            setTimeout((() => {
+                document.querySelector(item).classList.remove(`_moove-${arr_1[num_1]}`);
+            }), 2500);
+        } else if (1 == num && document.querySelector(".field__evil_1").classList.contains("_loose")) {
+            arr_1 = [ 7, 9, 11 ];
+            document.querySelector(item).classList.add(`_moove-${arr_1[num_1]}`);
+            setTimeout((() => {
+                document.querySelector(item).classList.remove(`_moove-${arr_1[num_1]}`);
+            }), 2500);
+        }
+        if (2 == num && !document.querySelector(".field__evil_2").classList.contains("_loose")) {
+            document.querySelector(item).classList.add(`_moove-${arr_2[num_2]}`);
+            setTimeout((() => {
+                document.querySelector(item).classList.remove(`_moove-${arr_2[num_2]}`);
+            }), 2500);
+        } else if (2 == num && document.querySelector(".field__evil_2").classList.contains("_loose")) {
+            arr_2 = [ 8, 10, 12 ];
+            document.querySelector(item).classList.add(`_moove-${arr_2[num_2]}`);
+            setTimeout((() => {
+                document.querySelector(item).classList.remove(`_moove-${arr_2[num_2]}`);
+            }), 2500);
+        }
+    }
     function moove_enemy(item, num) {
         let arr_1 = [ 1, 3, 5 ];
         let arr_2 = [ 2, 4, 6 ];
         let num_1 = get_random(0, 3);
         let num_2 = get_random(0, 3);
-        if (1 == num) {
+        if (1 == num && !document.querySelector(".field__heroe-inner_1").classList.contains("_loose")) {
             document.querySelector(item).classList.add(`_enemy-${arr_1[num_1]}`);
             setTimeout((() => {
                 document.querySelector(item).classList.remove(`_enemy-${arr_1[num_1]}`);
             }), 2500);
-        } else if (2 == num) {
+        } else if (1 == num && document.querySelector(".field__heroe-inner_1").classList.contains("_loose")) {
+            arr_1 = [ 7, 9, 11 ];
+            document.querySelector(item).classList.add(`_enemy-${arr_1[num_1]}`);
+            setTimeout((() => {
+                document.querySelector(item).classList.remove(`_enemy-${arr_1[num_1]}`);
+            }), 2500);
+        }
+        if (2 == num && !document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            document.querySelector(item).classList.add(`_enemy-${arr_2[num_2]}`);
+            setTimeout((() => {
+                document.querySelector(item).classList.remove(`_enemy-${arr_2[num_2]}`);
+            }), 2500);
+        } else if (2 == num && document.querySelector(".field__heroe-inner_2").classList.contains("_loose")) {
+            arr_2 = [ 8, 10, 12 ];
             document.querySelector(item).classList.add(`_enemy-${arr_2[num_2]}`);
             setTimeout((() => {
                 document.querySelector(item).classList.remove(`_enemy-${arr_2[num_2]}`);
@@ -613,6 +1262,10 @@
         if (targetElement.closest(".levels__arrow_right")) if (current_level < 4) {
             sessionStorage.setItem("current-level", current_level + 1);
             document.querySelector(".levels__middle p").textContent = sessionStorage.getItem("current-level");
+        }
+        if (targetElement.closest(".team__rules-button")) {
+            document.querySelector(".team__rules").classList.add("_hide");
+            sessionStorage.setItem("team-rule", true);
         }
         if (targetElement.closest(".heroe-team__button")) {
             remove_class_item(".heroe-team__button-box", targetElement.closest(".content-item__heroe").dataset.hero, "_selected");

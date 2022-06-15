@@ -5,7 +5,7 @@
 	<title>Try Win - game</title>
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="css/style.min.css?_v=20220614151316">
+	<link rel="stylesheet" href="css/style.min.css?_v=20220615153443">
 	<link rel="shortcut icon" href="favicon.ico">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
 </head>
@@ -164,7 +164,7 @@
 									<div class="field__man field__man_1">
 										<picture><source srcset="img/heroes/hero-1.webp" type="image/webp"><img src="img/heroes/hero-1.png" alt="Image"></picture>
 									</div>
-									<div class="field__weapon-item">
+									<div class="field__weapon-item field__weapon-item_1">
 										<div class="field__weapon-image">
 											<picture><source srcset="img/icons/box-weapon.webp" type="image/webp"><img src="img/icons/box-weapon.png" alt="Image"></picture>
 										</div>
@@ -185,7 +185,7 @@
 									<div class="field__man field__man_2">
 										<picture><source srcset="img/heroes/hero-1.webp" type="image/webp"><img src="img/heroes/hero-1.png" alt="Image"></picture>
 									</div>
-									<div class="field__weapon-item">
+									<div class="field__weapon-item field__weapon-item_2">
 										<div class="field__weapon-image">
 											<picture><source srcset="img/icons/box-weapon.webp" type="image/webp"><img src="img/icons/box-weapon.png" alt="Image"></picture>
 										</div>
@@ -207,10 +207,56 @@
 						<p>Fight</p>
 					</div>
 				</div>
+				<div class="game__win win _hide">
+					<div class="win__body">
+						<div class="win__bg">
+							<picture><source srcset="img/other/board.webp" type="image/webp"><img src="img/other/board.png" alt="Image"></picture>
+						</div>
+						<div class="win__content">
+							<div class="win__icon">
+								<p>winner</p>
+							</div>
+							<div class="win__money">
+								<div class="win__count">500</div>
+								<div class="win__coin">
+									<picture><source srcset="img/icons/coins.webp" type="image/webp"><img src="img/icons/coins.png" alt="Icon"></picture>
+								</div>
+							</div>
+							<div class="win__unlock-item">
+								<div class="win__unlock-text">Unlock</div>
+								<div class="win__unlock-image">
+									<picture><source srcset="img/heroes/hero-2.webp" type="image/webp"><img src="img/heroes/hero-2.png" alt="Image"></picture>
+								</div>
+							</div>
+							<a href="index.html" class="win__button"></a>
+						</div>
+					</div>
+				</div>
+				<div class="game__loose loose _hide">
+					<div class="loose__body">
+						<div class="loose__bg">
+							<picture><source srcset="img/other/board.webp" type="image/webp"><img src="img/other/board.png" alt="Image"></picture>
+						</div>
+						<div class="loose__content">
+							<div class="loose__text">evil winner</div>
+							<div class="loose__item">
+								<div class="loose__image loose__image_1">
+									<picture><source srcset="img/enemys/enemy-1.webp" type="image/webp"><img src="img/enemys/enemy-1.png" alt="Image"></picture>
+								</div>
+								<div class="loose__image loose__image_2">
+									<picture><source srcset="img/enemys/enemy-2.webp" type="image/webp"><img src="img/enemys/enemy-2.png" alt="Image"></picture>
+								</div>
+							</div>
+							<a href="index.html" class="loose__button">
+								<p>menu</p>
+							</a>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	<script src="js/app.min.js?_v=20220614151316"></script>
+	<script src="js/app.min.js?_v=20220615153443"></script>
 </body>
 
 </html>
