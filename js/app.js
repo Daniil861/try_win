@@ -262,6 +262,26 @@
         box_weapon.append(board, sword, item);
         return box_weapon;
     }
+    function create_character(hero_num) {
+        let character = document.createElement("div");
+        character.classList.add("heroe-team__character");
+        let box_hero = document.createElement("div");
+        box_hero.classList.add("heroe-team__box-hero");
+        let box_hero_image = document.createElement("img");
+        setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) box_hero_image.setAttribute("srcset", "img/icons/card-hero.webp"); else box_hero_image.setAttribute("src", "img/icons/card-hero.png");
+        }), 100);
+        box_hero.append(box_hero_image);
+        let hero = document.createElement("div");
+        hero.classList.add("heroe-team__hero");
+        let hero_image = document.createElement("img");
+        setTimeout((() => {
+            if (document.documentElement.classList.contains("webp")) hero_image.setAttribute("srcset", `img/heroes/hero-${hero_num}.webp`); else hero_image.setAttribute("src", `img/heroes/hero-${hero_num}.png`);
+        }), 100);
+        hero.append(hero_image);
+        character.append(box_hero, hero);
+        return character;
+    }
     function open_weapons_active_heroes() {
         let heroes = get_arr_storrage("heroes");
         heroes.forEach((el => {
@@ -293,26 +313,6 @@
                 el.append(item);
             }
         }));
-    }
-    function create_character(hero_num) {
-        let character = document.createElement("div");
-        character.classList.add("heroe-team__character");
-        let box_hero = document.createElement("div");
-        box_hero.classList.add("heroe-team__box-hero");
-        let box_hero_image = document.createElement("img");
-        setTimeout((() => {
-            if (document.documentElement.classList.contains("webp")) box_hero_image.setAttribute("srcset", "img/icons/card-hero.webp"); else box_hero_image.setAttribute("src", "img/icons/card-hero.png");
-        }), 100);
-        box_hero.append(box_hero_image);
-        let hero = document.createElement("div");
-        hero.classList.add("heroe-team__hero");
-        let hero_image = document.createElement("img");
-        setTimeout((() => {
-            if (document.documentElement.classList.contains("webp")) hero_image.setAttribute("srcset", `img/heroes/hero-${hero_num}.webp`); else hero_image.setAttribute("src", `img/heroes/hero-${hero_num}.png`);
-        }), 100);
-        hero.append(hero_image);
-        character.append(box_hero, hero);
-        return character;
     }
     function remove_team_locked_character_box(character) {
         document.querySelectorAll(".heroe-team__box-locked").forEach((el => {
@@ -1350,18 +1350,43 @@
             }), 2500);
         }
     }
-    const audio_main = new Audio;
-    audio_main.preload = "auto";
-    audio_main.src = "files/audio_m_1.mp3";
-    audio_main.loop = [ true ];
-    const audio_fight = new Audio;
-    audio_fight.preload = "auto";
-    audio_fight.src = "files/audio_g_2.mp3";
-    audio_main.loop = [ true ];
+    if (document.querySelector(".main") || document.querySelector(".team") || document.querySelector(".shop")) {
+        const audio_main = new Audio;
+        audio_main.preload = "auto";
+        audio_main.src = "files/audio_m_1.mp3";
+        audio_main.loop = [ true ];
+        audio_main.volume = .5;
+        document.addEventListener("click", (e => {
+            let targetElement = e.target;
+            if (targetElement.closest(".volume") && (document.querySelector(".main") || document.querySelector(".shop") || document.querySelector(".team"))) {
+                if (targetElement.closest(".volume") && !targetElement.closest(".volume").classList.contains("_hide")) audio_main.volume = 0; else if (targetElement.closest(".volume") && targetElement.closest(".volume").classList.contains("_hide")) {
+                    audio_main.volume = .5;
+                    audio_main.play();
+                }
+                targetElement.closest(".volume").classList.toggle("_hide");
+            }
+        }));
+    }
+    if (document.querySelector(".game")) {
+        const audio_fight = new Audio;
+        audio_fight.preload = "auto";
+        audio_fight.src = "files/audio_g_2.mp3";
+        audio_fight.loop = [ true ];
+        audio_fight.volume = .5;
+        document.addEventListener("click", (e => {
+            let targetElement = e.target;
+            if (targetElement.closest(".volume") && document.querySelector(".game")) {
+                if (targetElement.closest(".volume") && !targetElement.closest(".volume").classList.contains("_hide")) audio_fight.volume = 0; else if (targetElement.closest(".volume") && targetElement.closest(".volume").classList.contains("_hide")) {
+                    audio_fight.volume = .5;
+                    audio_fight.play();
+                }
+                targetElement.closest(".volume").classList.toggle("_hide");
+            }
+        }));
+    }
     document.addEventListener("click", (e => {
         let targetElement = e.target;
         let current_level = +sessionStorage.getItem("current-level");
-        sessionStorage.getItem("money");
         if (targetElement.closest(".preloader__button")) {
             sessionStorage.setItem("preloader", true);
             preloader.classList.add("_hide");
@@ -1455,14 +1480,6 @@
             document.querySelector(".game__button-start-box").classList.add("_start");
             document.querySelector(".game__button-start").classList.remove("_anim");
             start_game();
-        }
-        if (targetElement.closest(".volume") && (document.querySelector(".main") || document.querySelector(".shop") || document.querySelector(".team"))) {
-            if (targetElement.closest(".volume") && targetElement.closest(".volume").classList.contains("_hide")) audio_main.play(); else if (targetElement.closest(".volume") && !targetElement.closest(".volume").classList.contains("_hide")) audio_main.pause();
-            targetElement.closest(".volume").classList.toggle("_hide");
-        }
-        if (targetElement.closest(".volume") && document.querySelector(".game")) {
-            if (targetElement.closest(".volume") && targetElement.closest(".volume").classList.contains("_hide")) audio_fight.play(); else if (targetElement.closest(".volume") && !targetElement.closest(".volume").classList.contains("_hide")) audio_fight.pause();
-            targetElement.closest(".volume").classList.toggle("_hide");
         }
     }));
     window["FLS"] = true;
